@@ -7,7 +7,6 @@ import { asyncHandler } from "../utils/asyhandler.util.js"
 import { ApiResponse } from "../utils/ApiResponse.util.js"
 import { Apierror } from "../utils/Apierror.util.js"
 import jwt from "jsonwebtoken"
-import { app } from "../app.js"
 
 
 const generateAccessandRefreshtoken = async (userid) => {
