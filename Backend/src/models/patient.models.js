@@ -38,5 +38,11 @@ const patientSchema = new mongoose.Schema({
         type : String,
         enum: ["admitted", "released", "follow-up"],
         require : true
+    },
+    report : {
+        type : String,
+        require : true
     }
 }, {timestamps : true})
+
+export const Patient = mongoose.model("Patient", patientSchema)
