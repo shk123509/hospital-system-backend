@@ -25,7 +25,7 @@ import { uplodecloudinaryFile } from "../utils/upload.util.js"
 
 // Create Patient
 const createPatient = asyncHandler(async (req, res) => {
-    const { userName, email, phone, gender, blood_group, address, emergency_contact, status } = req.body
+    const { userName, email, phone, gender, blood_group, address, emergency_contact, status, doctor } = req.body
 
     if (!userName) {
         throw new Apierror(400, "USERNAME IS REQUIRED FIELDS")
@@ -51,6 +51,10 @@ const createPatient = asyncHandler(async (req, res) => {
     }
     if (!status) {
         throw new Apierror(400, "status IS REQUIRED FIELDS")
+    }
+
+    if (!doctor) {
+        throw new Apierror(400, "DOCTOR ID REQUIRED FILDS")
     }
 
     const user = await User.findById(req.user?._id);
@@ -93,7 +97,8 @@ const createPatient = asyncHandler(async (req, res) => {
             address,
             emergency_contact,
             status,
-            report: report?.url
+            report: report?.url,
+            doctor : doctor
         }
 
     )

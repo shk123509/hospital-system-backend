@@ -14,7 +14,7 @@ import { User } from "../models/user.models.js";
 // 1. Create doctor
 const createDoctor = asyncHandler(async (req, res) => {
     // 1. Create doctor
-    const { specialization, experience_years, availability, consultation_fee } = req.body
+    const { specialization, experience_years, availability, consultation_fee, name } = req.body
 
     if (!specialization) {
         throw new Apierror(400, "specializationis require")
@@ -27,6 +27,10 @@ const createDoctor = asyncHandler(async (req, res) => {
     }
     if (!consultation_fee) {
         throw new Apierror(400, "consultation_fee is require")
+    }
+
+    if (!name) {
+        throw new Apierror(400, "Name is required fields")
     }
 
     const userId = await User.findById(req.user?._id);
@@ -42,7 +46,8 @@ const createDoctor = asyncHandler(async (req, res) => {
             experience_years,
             availability,
             consultation_fee,
-            user: userId?._id
+            user: userId?._id,
+            name
 
 
         }

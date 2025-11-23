@@ -17,6 +17,10 @@ const doctorSchema = new mongoose.Schema({
         type : Boolean,
         default : false
     },
+    name : {
+        type : String,
+        require : true
+    },
     consultation_fee : {
         type : Number,
         require : true

@@ -18,6 +18,10 @@ const patientSchema = new mongoose.Schema({
         type : mongoose.Schema.Types.ObjectId,
         ref : "User"
     },
+    doctor : {
+        type : mongoose.Schema.Types.ObjectId,
+        ref : "Doctor"
+    },
     gender : {
         type : String,
         require : true
