@@ -387,13 +387,16 @@ const CancelAppointment = asyncHandler(async(req, res) =>{
         throw new Apierror(400, "USER DOSE NOT EXIST.")
     }
 
-    const cancel = await Appointment.findById(appointmentId, {status : "cancelled"});
+    const cancel = await Appointment.findById(appointmentId);
 
     if (!cancel) {
         throw new Apierror(400, "APPOINTMENT IS NOT DELETE.")
     }
 
-    return res.status(200).json(new ApiResponse(200, cancel, "APPOINTMENT IS DELETING SUCCESSFULLY."))
+   const allCancel =  cancel.status = "cancelled"
+   await cancel.save();
+
+    return res.status(200).json(new ApiResponse(200, allCancel, "APPOINTMENT IS DELETING SUCCESSFULLY."))
 })
 
 

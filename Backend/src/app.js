@@ -20,11 +20,13 @@ import userRoutes from "./routes/user.routes.js"
 import doctorRoute from "./routes/doctor.routes.js"
 import patientRoute from "./routes/patient.routes.js"
 import appointmentRoute from "./routes/appointment.routes.js"
+import roomRoutes from "./routes/room.routes.js"
 
 app.use("/api/v2/users", userRoutes)
 app.use("/api/v2/doctor",doctorRoute)
 app.use("/api/v2/patient", patientRoute)
 app.use("/api/v2/appointment", appointmentRoute)
+app.use("/api/v2/rooms", roomRoutes)
 
 
 export {app}  
