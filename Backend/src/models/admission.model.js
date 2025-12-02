@@ -17,7 +17,7 @@ const admissionSchema = new mongoose.Schema(
       ref: "Room",
       required: true,
     },
-    createdBy: {
+    createdAtUser: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User", // admin / receptionist
       required: true,
