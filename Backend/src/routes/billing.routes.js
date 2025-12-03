@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { verifyJWT } from "../middleware/auth.middleware.js";
-import {createdBilling, updateBilling, UpdatesStatus, deleteBilling, getByStatsu, getbybillingid} from "../controllers/billing.controllers.js"
+import {createdBilling, updateBilling, UpdatesStatus, deleteBilling, getByStatsu, getbybillingid,getbypatientid,getbyadmissionId,getbyfilter,autoCalculate,prevent} from "../controllers/billing.controllers.js"
 
 
 
@@ -18,6 +18,16 @@ router.route("/delete/:billingId").delete(deleteBilling)
 router.route("/getbystatsu").post(getByStatsu)
 
 router.route("/getbubillingid/:billingId").get(getbybillingid)
+
+router.route("/getbypatientId/:patientId").get(getbypatientid)
+
+router.route("/getbyadmission/:admissionId").get(getbyadmissionId)
+
+router.route("/getbyfilter").post(getbyfilter)
+
+router.route("/autocalculateAmount").post(autoCalculate)
+
+router.route("/prevent/:billingId").get(prevent)
 
 
 export default router

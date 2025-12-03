@@ -241,11 +241,136 @@ const getbybillingid = asyncHandler(async(req, res) =>{
     return res.status(200).json(new ApiResponse(200, fetched, "Models is fetched successfully."))
 })
 
+// 6. Get Billings by Patient ID
+const getbypatientid = asyncHandler(async(req, res) =>{
+    const {patientId} = req.params;
+
+    if (!patientId) {
+        throw new Apierror(400, "Patient id is required fields.")
+    }
+
+    const user = await User.findById(req.user?._id);
+
+    if (!user) {
+        throw new Apierror(400, "User dose not exist.")
+    }
+
+    const fetched = await Billing.find({patient : patientId}).select("-admission -generatedBy");
+
+    if (fetched.length === 0) {
+        throw new Apierror(400, "Models is not exist.")
+    }
+
+    return res.status(200).json(new ApiResponse(200, fetched, "Models is fetched"))
+
+})
+
+// 7. Get Billings by Admission ID
+const getbyadmissionId = asyncHandler(async(req, res) =>{
+    const {admissionId} = req.params;
+
+    if (!admissionId) {
+        throw new Apierror(400, "Admission id is required fields.")
+    }
+
+    const user = await User.findById(req.user?._id);
+
+    if (!user) {
+        throw new Apierror(400, "User dose not exist.")
+    }
+
+    const fetched = await Billing.find({admission : admissionId}).select("-patient -generatedBy");
+
+    if (fetched.length === 0) {
+        throw new Apierror(400, "Models dose not exist.")
+    }
+
+    return res.status(200).json(new ApiResponse(200, fetched, "Models is fetched successfully."))
+})
+
+// 9. Get All Billings (with filters + pagination)
+const getbyfilter = asyncHandler(async(req, res) =>{
+    const {payment_status, total_amount} = req.body;
+
+    if (!payment_status) {
+        throw new Apierror(400, "payment_status is required fields.")
+    }
+
+    if (!total_amount) {
+        throw new Apierror(400, "total_amount is required fields.")
+    }
+
+    const user = await User.findById(req.user?._id);
+
+    if (!user) {
+        throw new Apierror(400, "User dose not exist.")
+    }
+
+    const fetched = await Billing.find(
+        {
+            total_amount : total_amount,
+            payment_status : payment_status
+        }
+    )
+
+    if (fetched.length === 0) {
+        throw new Apierror(400, "Models dose not exist.")
+    }
+
+    return res.status(200).json(new ApiResponse(200, fetched, "Models is fetched successgully."))
+})
+
+// 10. Auto-calculate Total Amount
+const autoCalculate = asyncHandler(async(req, res) =>{
+    const {consultation_charges, medicine_charges, room_charges, lab_charges} = req.body;
+
+    if (!consultation_charges) {
+        throw new Apierror(400, "consultation_charges is rquired fields.")
+    }
+
+    if (!medicine_charges) {
+        throw new Apierror(400, "medicine_charges is rquired fields.")
+    }
+
+    if (!room_charges) {
+        throw new Apierror(400, "room_charges is rquired fields.")
+    }
+
+    if (!lab_charges) {
+        throw new Apierror(400, "lab_charges is rquired fields.")
+    }
+
+    const text = 1000;
+    const discount = 500;
+
+    const total_amount = consultation_charges+medicine_charges+lab_charges+room_charges+text-discount;
+
+    return res.status(200).json(new ApiResponse(200, total_amount, "All amoutn claculate."))
+})
+// 11. Prevent Duplicate Billing for Same Admission (optional)
+const prevent = asyncHandler(async(req, res) =>{
+    const {billingId} = req.params;
+
+    const exist = await Billing.findOne({billingId});
+
+    if (exist) {
+        return res.status(200).json(new ApiResponse(200,exist,"Bill already exists for this admission."))
+    }
+
+})
+
+
+
 export {
     createdBilling,
     updateBilling,
     UpdatesStatus,
     deleteBilling,
     getByStatsu,
-    getbybillingid
+    getbybillingid,
+    getbypatientid,
+    getbyadmissionId,
+    getbyfilter,
+    autoCalculate,
+    prevent
 }

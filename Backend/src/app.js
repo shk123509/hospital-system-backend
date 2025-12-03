@@ -23,6 +23,7 @@ import appointmentRoute from "./routes/appointment.routes.js"
 import roomRoutes from "./routes/room.routes.js"
 import admissionRoutes from "./routes/admission.routes.js"
 import billingRoutes from "./routes/billing.routes.js"
+import prescriptionRoutes from "./routes/prescription.routes.js"
 
 app.use("/api/v2/users", userRoutes)
 app.use("/api/v2/doctor",doctorRoute)
@@ -31,6 +32,6 @@ app.use("/api/v2/appointment", appointmentRoute)
 app.use("/api/v2/rooms", roomRoutes)
 app.use("/api/v2/admissions", admissionRoutes)
 app.use("/api/v2/billings", billingRoutes)
-
+app.use("/api/v2/pre", prescriptionRoutes)
 
 export {app}  
