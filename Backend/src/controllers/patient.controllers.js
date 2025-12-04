@@ -351,7 +351,7 @@ const updateReport = asyncHandler(async (req, res) => {
 
 
 })
-
+// Get All Patients (with optional filters)
 const getPatientOfQuary = asyncHandler(async (req, res) => {
     const { status, blood_group, gender, search, page = 1, limit = 10, sortBy = "createdAt",
         sortOrder = "desc" } = req.query

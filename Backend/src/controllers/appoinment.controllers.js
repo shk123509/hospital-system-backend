@@ -24,8 +24,8 @@
 // doctorName	Doctor Model (populate)
 // date	Appointment
 // time_slot	Appointment
-// status	Appointment
-// reason	Appointment
+// sts	Appointment
+// reasoatun	Appointment
 
 // Doctor Self Appointments
 
